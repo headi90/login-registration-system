@@ -1,5 +1,5 @@
-#include "hello.hpp"
 #include <gtest/gtest.h>
+#include <hello.hpp>
 
 // Demonstrate some basic assertions.
 TEST(HelloTest, BasicAssertions)

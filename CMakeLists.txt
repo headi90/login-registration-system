@@ -20,7 +20,11 @@ FetchContent_MakeAvailable(googletest)
 
 
 set(SOURCES
-    hello.cpp
+    src/hello.cpp
+)
+    
+set(HEADERS
+    inc/hello.hpp
 )
 
 set(TESTS
@@ -30,15 +34,17 @@ set(TESTS
 set(FLAGS -Wall -Wextra -pedantic -Wconversion -Werror)
 
 
-add_library(${PROJECT_NAME}-lib STATIC ${SOURCES})
+add_library(${PROJECT_NAME}-lib STATIC ${SOURCES} ${HEADERS})
 
-add_executable(${PROJECT_NAME} main.cpp)
+add_executable(${PROJECT_NAME} src/main.cpp)
 add_executable(${PROJECT_NAME}-ut ${TESTS})
 
 target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}-lib)
 target_link_libraries(${PROJECT_NAME}-ut ${PROJECT_NAME}-lib gtest_main)
 
-target_include_directories(${PROJECT_NAME}-ut PRIVATE .)
+target_include_directories(${PROJECT_NAME} PRIVATE inc)
+target_include_directories(${PROJECT_NAME}-ut PRIVATE inc)
+target_include_directories(${PROJECT_NAME}-lib PRIVATE inc)
 
 target_compile_options(${PROJECT_NAME} PRIVATE ${FLAGS})
 target_compile_options(${PROJECT_NAME}-ut PRIVATE ${FLAGS})
