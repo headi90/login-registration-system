@@ -33,3 +33,7 @@
 
 # VS code
 *.code-workspace
+.vscode
+
+# CMAKE
+build
