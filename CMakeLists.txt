@@ -20,15 +20,15 @@ FetchContent_MakeAvailable(googletest)
 
 
 set(SOURCES
-    src/hello.cpp
+    src/user.cpp
 )
     
 set(HEADERS
-    inc/hello.hpp
+    inc/user.hpp
 )
 
 set(TESTS
-    tests/hello.ut.cpp
+    tests/user.ut.cpp
 )
 
 set(FLAGS -Wall -Wextra -pedantic -Wconversion -Werror)
