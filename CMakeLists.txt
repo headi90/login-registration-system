@@ -18,17 +18,32 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 ##############################################################################################################
 
+##############################################################################################################
+#OpenSSL finding
+find_package(OpenSSL REQUIRED)
+
+message("OpenSSL include dir: ${OPENSSL_INCLUDE_DIR}")
+message("OpenSSL libraries: ${OPENSSL_LIBRARIES}")
+
+include_directories(${OPENSSL_INCLUDE_DIR})
+list(APPEND LIB_LIST ${OPENSSL_LIBRARIES})
+##############################################################################################################
+
 
 set(SOURCES
     src/user.cpp
-)
+    src/md5PasswordHasher.cpp
+    )
     
-set(HEADERS
+    set(HEADERS
     inc/user.hpp
-)
-
-set(TESTS
+    inc/iPasswordHasher.hpp
+    inc/md5PasswordHasher.hpp
+    )
+    
+    set(TESTS
     tests/user.ut.cpp
+    tests/md5PasswordHasher.ut.cpp
 )
 
 set(FLAGS -Wall -Wextra -pedantic -Wconversion -Werror)
@@ -39,8 +54,8 @@ add_library(${PROJECT_NAME}-lib STATIC ${SOURCES} ${HEADERS})
 add_executable(${PROJECT_NAME} src/main.cpp)
 add_executable(${PROJECT_NAME}-ut ${TESTS})
 
-target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}-lib)
-target_link_libraries(${PROJECT_NAME}-ut ${PROJECT_NAME}-lib gtest_main)
+target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}-lib ssl crypto)
+target_link_libraries(${PROJECT_NAME}-ut ${PROJECT_NAME}-lib gtest_main ssl crypto)
 
 target_include_directories(${PROJECT_NAME} PRIVATE inc)
 target_include_directories(${PROJECT_NAME}-ut PRIVATE inc)
