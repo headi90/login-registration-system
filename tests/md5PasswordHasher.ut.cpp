@@ -2,6 +2,13 @@
 
 #include "md5PasswordHasher.hpp"
 
+// TODO: test fixture!!!
+TEST(Md5Tests, Md5HasherCanHashEmptyStrings)
+{
+    Md5PasswordHasher hasher{};
+    ASSERT_EQ(hasher.hash(""), "d41d8cd98f00b204e9800998ecf8427e");
+}
+
 TEST(Md5Tests, Md5HasherCanHashSimpleStrings)
 {
     Md5PasswordHasher hasher{};
