@@ -33,17 +33,20 @@ list(APPEND LIB_LIST ${OPENSSL_LIBRARIES})
 set(SOURCES
     src/user.cpp
     src/md5PasswordHasher.cpp
+    src/sha256PasswordHasher.cpp
     )
     
     set(HEADERS
     inc/user.hpp
     inc/iPasswordHasher.hpp
     inc/md5PasswordHasher.hpp
+    inc/sha256PasswordHasher.hpp
     )
     
     set(TESTS
     tests/user.ut.cpp
     tests/md5PasswordHasher.ut.cpp
+    tests/sha256PasswordHasher.ut.cpp
 )
 
 set(FLAGS -Wall -Wextra -pedantic -Wconversion -Werror)
