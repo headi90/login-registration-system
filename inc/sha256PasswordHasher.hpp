@@ -3,5 +3,5 @@
 
 class Sha256PasswordHasher : public iPasswordHasher {
 public:
-    std::string hash(std::string input) override;
+    std::string hash(std::string& input) override;
 };

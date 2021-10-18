@@ -34,6 +34,7 @@ set(SOURCES
     src/user.cpp
     src/md5PasswordHasher.cpp
     src/sha256PasswordHasher.cpp
+    src/passwordValidator.cpp
     )
     
     set(HEADERS
@@ -41,12 +42,15 @@ set(SOURCES
     inc/iPasswordHasher.hpp
     inc/md5PasswordHasher.hpp
     inc/sha256PasswordHasher.hpp
+    inc/iPasswordValidator.hpp
+    inc/passwordValidator.hpp
     )
     
     set(TESTS
     tests/user.ut.cpp
     tests/md5PasswordHasher.ut.cpp
     tests/sha256PasswordHasher.ut.cpp
+    tests/passwordValidator.ut.cpp
 )
 
 set(FLAGS -Wall -Wextra -pedantic -Wconversion -Werror)

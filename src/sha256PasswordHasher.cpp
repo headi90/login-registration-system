@@ -5,7 +5,7 @@
 #include <sstream>
 #include <string>
 
-std::string Sha256PasswordHasher::hash(std::string input)
+std::string Sha256PasswordHasher::hash(std::string& input)
 {
     EVP_MD_CTX* mdctx;
     const EVP_MD* md;
