@@ -6,9 +6,11 @@ set(CMAKE_CXX_STANDARD 17)
 
 enable_testing()
 
+include(FetchContent)
+
 ##############################################################################################################
 # Google test download
-include(FetchContent)
+message("Google test download")
 FetchContent_Declare(
   googletest
   URL https://github.com/google/googletest/archive/609281088cfefc76f9d0ce82e1ff6c30cc3591e5.zip
@@ -31,11 +33,18 @@ list(APPEND LIB_LIST ${OPENSSL_LIBRARIES})
 
 
 ##############################################################################################################
-# Nlohman JSON library finding
-find_package(nlohmann_json 3.2.0 REQUIRED)
+# Nlohmann JSON library download
+message("Nlohmann JSON library download")
+FetchContent_Declare(json
+  GIT_REPOSITORY https://github.com/ArthurSonzogni/nlohmann_json_cmake_fetchcontent
+  GIT_TAG v3.10.4)
 
-message("nlohmann_json include dir: ${NLOHMANN_JSON_INCLUDE_DIR}")
-message("nlohmann_json libraries: ${NLOHMANN_JSON_LIBRARIES}")
+FetchContent_GetProperties(json)
+if(NOT json_POPULATED)
+  FetchContent_Populate(json)
+  add_subdirectory(${json_SOURCE_DIR} ${json_BINARY_DIR} EXCLUDE_FROM_ALL)
+endif()
+
 ##############################################################################################################
 
 set(SOURCES
