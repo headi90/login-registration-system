@@ -30,11 +30,20 @@ list(APPEND LIB_LIST ${OPENSSL_LIBRARIES})
 ##############################################################################################################
 
 
+##############################################################################################################
+# Nlohman JSON library finding
+find_package(nlohmann_json 3.2.0 REQUIRED)
+
+message("nlohmann_json include dir: ${NLOHMANN_JSON_INCLUDE_DIR}")
+message("nlohmann_json libraries: ${NLOHMANN_JSON_LIBRARIES}")
+##############################################################################################################
+
 set(SOURCES
     src/user.cpp
     src/md5PasswordHasher.cpp
     src/sha256PasswordHasher.cpp
     src/passwordValidator.cpp
+    src/jsonUserDatabaseHandler.cpp
     )
     
     set(HEADERS
@@ -44,6 +53,8 @@ set(SOURCES
     inc/sha256PasswordHasher.hpp
     inc/iPasswordValidator.hpp
     inc/passwordValidator.hpp
+    inc/iUserDatabaseHandler.hpp
+    inc/jsonUserDatabaseHandler.hpp
     )
     
     set(TESTS
@@ -51,6 +62,7 @@ set(SOURCES
     tests/md5PasswordHasher.ut.cpp
     tests/sha256PasswordHasher.ut.cpp
     tests/passwordValidator.ut.cpp
+    tests/jsonUserDatabaseHandler.ut.cpp
 )
 
 set(FLAGS -Wall -Wextra -pedantic -Wconversion -Werror)
@@ -61,7 +73,7 @@ add_library(${PROJECT_NAME}-lib STATIC ${SOURCES} ${HEADERS})
 add_executable(${PROJECT_NAME} src/main.cpp)
 add_executable(${PROJECT_NAME}-ut ${TESTS})
 
-target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}-lib ssl crypto)
+target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}-lib ssl crypto nlohmann_json::nlohmann_json)
 target_link_libraries(${PROJECT_NAME}-ut ${PROJECT_NAME}-lib gtest_main ssl crypto)
 
 target_include_directories(${PROJECT_NAME} PRIVATE inc)
