@@ -46,7 +46,7 @@ if(NOT json_POPULATED)
 endif()
 
 if(NOT NLOHMANNJSON_ROOT)
-  set(NLOHMANNJSON_ROOT "${PROJECT_SOURCE_DIR}/lib/json")
+  set(NLOHMANNJSON_ROOT "${CMAKE_BINARY_DIR}/_deps/json-src/include")
 endif()
 
 message("NLOHMANNJSON_ROOT: ${NLOHMANNJSON_ROOT}")
@@ -91,9 +91,9 @@ add_executable(${PROJECT_NAME}-ut ${TESTS})
 target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}-lib ssl crypto nlohmann_json::nlohmann_json)
 target_link_libraries(${PROJECT_NAME}-ut ${PROJECT_NAME}-lib gtest_main ssl crypto)
 
-target_include_directories(${PROJECT_NAME} PRIVATE inc NLOHMANNJSON_ROOT)
-target_include_directories(${PROJECT_NAME}-ut PRIVATE inc NLOHMANNJSON_ROOT)
-target_include_directories(${PROJECT_NAME}-lib PRIVATE inc NLOHMANNJSON_ROOT)
+target_include_directories(${PROJECT_NAME} PRIVATE inc ${NLOHMANNJSON_ROOT})
+target_include_directories(${PROJECT_NAME}-ut PRIVATE inc ${NLOHMANNJSON_ROOT})
+target_include_directories(${PROJECT_NAME}-lib PRIVATE inc ${NLOHMANNJSON_ROOT})
 
 target_compile_options(${PROJECT_NAME} PRIVATE ${FLAGS})
 target_compile_options(${PROJECT_NAME}-ut PRIVATE ${FLAGS})
