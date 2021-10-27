@@ -45,6 +45,16 @@ if(NOT json_POPULATED)
   add_subdirectory(${json_SOURCE_DIR} ${json_BINARY_DIR} EXCLUDE_FROM_ALL)
 endif()
 
+if(NOT NLOHMANNJSON_ROOT)
+  set(NLOHMANNJSON_ROOT "${PROJECT_SOURCE_DIR}/lib/json")
+endif()
+
+target_include_directories(
+  nlohmann_json
+  INTERFACE
+    ${NLOHMANNJSON_ROOT}/include
+)
+
 ##############################################################################################################
 
 set(SOURCES
@@ -55,7 +65,7 @@ set(SOURCES
     src/jsonUserDatabaseHandler.cpp
     )
     
-    set(HEADERS
+set(HEADERS
     inc/user.hpp
     inc/iPasswordHasher.hpp
     inc/md5PasswordHasher.hpp
@@ -66,7 +76,7 @@ set(SOURCES
     inc/jsonUserDatabaseHandler.hpp
     )
     
-    set(TESTS
+set(TESTS
     tests/user.ut.cpp
     tests/md5PasswordHasher.ut.cpp
     tests/sha256PasswordHasher.ut.cpp
