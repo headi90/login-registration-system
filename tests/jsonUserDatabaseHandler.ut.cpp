@@ -75,6 +75,21 @@ TEST_F(JsonDatabaseHandlerTest, JsonFileCanBeAppended)
     EXPECT_EQ(userOut2.getPasswordHash(), "testPass");
 }
 
+TEST_F(JsonDatabaseHandlerTest, TheSameUserCannotBeAddedToJsonFile)
+{
+    jsonUserDatabaseHandler jsonHandlerUnderTest{testFileNameAbsolute};
+    bool returnVal = jsonHandlerUnderTest.write(User{"john", "aserty"});
+    EXPECT_FALSE(returnVal);
+
+    returnVal = jsonHandlerUnderTest.write(User{"john", "qwerty"});
+    EXPECT_FALSE(returnVal);
+
+    // Existing user was not changed
+    auto userOut = jsonHandlerUnderTest.read("john");
+    EXPECT_EQ(userOut.getLogin(), "john");
+    EXPECT_EQ(userOut.getPasswordHash(), "12345678");
+}
+
 TEST_F(JsonDatabaseHandlerTest, JsonFileCanBeCreated)
 {
     const std::string testFileNameThatDoesntExist{"thisFileDoesntExist.json"};
@@ -94,4 +109,37 @@ TEST_F(JsonDatabaseHandlerTest, JsonFileCanBeCreated)
 
     // Remove temp file
     std::filesystem::remove(testFileNameThatDoesntExist);
+}
+
+TEST_F(JsonDatabaseHandlerTest, UserCanBeRemovedFromJsonFile)
+{
+    jsonUserDatabaseHandler jsonHandlerUnderTest{testFileNameAbsolute};
+
+    auto userOut = jsonHandlerUnderTest.read("john");
+    EXPECT_EQ(userOut.getLogin(), "john");
+    EXPECT_EQ(userOut.getPasswordHash(), "12345678");
+
+    auto returnVal = jsonHandlerUnderTest.remove("john");
+    EXPECT_TRUE(returnVal);
+
+    // Removed user cannot be read
+    auto userOut2 = jsonHandlerUnderTest.read("john");
+    EXPECT_EQ(userOut2.getLogin(), "");
+    EXPECT_EQ(userOut2.getPasswordHash(), "");
+}
+
+TEST_F(JsonDatabaseHandlerTest, RemovingOfNonExistingUserCanBeHandled)
+{
+    jsonUserDatabaseHandler jsonHandlerUnderTest{testFileNameAbsolute};
+
+    auto userOut = jsonHandlerUnderTest.read("Paul");
+    EXPECT_EQ(userOut.getLogin(), "");
+    EXPECT_EQ(userOut.getPasswordHash(), "");
+
+    bool returnVal = jsonHandlerUnderTest.remove("Paul");
+    EXPECT_TRUE(returnVal);
+
+    auto userOut2 = jsonHandlerUnderTest.read("Paul");
+    EXPECT_EQ(userOut2.getLogin(), "");
+    EXPECT_EQ(userOut2.getPasswordHash(), "");
 }

@@ -2,8 +2,11 @@
 
 #include "iUserDatabaseHandler.hpp"
 
+#include "nlohmann/json.hpp"
+
 #include <string>
 
+using json = nlohmann::json;
 class jsonUserDatabaseHandler : public iUserDatabaseHandler {
 public:
     jsonUserDatabaseHandler(const std::string& jsonFileName);
@@ -13,4 +16,8 @@ public:
 
 private:
     std::string jsonFileName_{};
+
+    bool checkIfUserExists(const std::string& login);
+    bool writeJsonToFile(json& jsonHandler);
+    bool readJsonFromFile(json& jsonHandler);
 };

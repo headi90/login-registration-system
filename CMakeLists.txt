@@ -78,9 +78,15 @@ set(TESTS
     tests/sha256PasswordHasher.ut.cpp
     tests/passwordValidator.ut.cpp
     tests/jsonUserDatabaseHandler.ut.cpp
-)
+    )
 
-set(FLAGS -Wall -Wextra -pedantic -Wconversion -Werror)
+set(FLAGS 
+    -Wall
+    -Wextra
+    -pedantic
+    -Wconversion
+    -Werror
+    )
 
 
 add_library(${PROJECT_NAME}-lib STATIC ${SOURCES} ${HEADERS})
