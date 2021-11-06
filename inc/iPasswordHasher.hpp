@@ -3,6 +3,6 @@
 
 class iPasswordHasher {
 public:
-    virtual std::string hash(std::string& input) = 0;
+    virtual std::string hash(const std::string& input) = 0;
     virtual ~iPasswordHasher() = default;
 };

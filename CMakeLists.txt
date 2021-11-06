@@ -59,6 +59,7 @@ set(SOURCES
     src/sha256PasswordHasher.cpp
     src/passwordValidator.cpp
     src/jsonUserDatabaseHandler.cpp
+    src/loginPasswordManager.cpp
     )
     
 set(HEADERS
@@ -70,6 +71,7 @@ set(HEADERS
     inc/passwordValidator.hpp
     inc/iUserDatabaseHandler.hpp
     inc/jsonUserDatabaseHandler.hpp
+    inc/loginPasswordManager.hpp
     )
     
 set(TESTS
@@ -78,6 +80,7 @@ set(TESTS
     tests/sha256PasswordHasher.ut.cpp
     tests/passwordValidator.ut.cpp
     tests/jsonUserDatabaseHandler.ut.cpp
+    tests/loginPasswordManager.ut.cpp
     )
 
 set(FLAGS 
@@ -95,7 +98,7 @@ add_executable(${PROJECT_NAME} src/main.cpp)
 add_executable(${PROJECT_NAME}-ut ${TESTS})
 
 target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}-lib ssl crypto nlohmann_json::nlohmann_json)
-target_link_libraries(${PROJECT_NAME}-ut ${PROJECT_NAME}-lib gtest_main ssl crypto)
+target_link_libraries(${PROJECT_NAME}-ut ${PROJECT_NAME}-lib gmock gtest_main ssl crypto)
 
 target_include_directories(${PROJECT_NAME} PRIVATE inc ${NLOHMANNJSON_ROOT})
 target_include_directories(${PROJECT_NAME}-ut PRIVATE inc ${NLOHMANNJSON_ROOT})

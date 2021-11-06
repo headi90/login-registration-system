@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-class IPasswordValidator {
+class iPasswordValidator {
 public:
     enum class PasswordValidatorResult {
         OK,
@@ -13,5 +13,5 @@ public:
     };
 
     virtual PasswordValidatorResult validate(std::string& password) = 0;
-    virtual ~IPasswordValidator() = default;
+    virtual ~iPasswordValidator() = default;
 };

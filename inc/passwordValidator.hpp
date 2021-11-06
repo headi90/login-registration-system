@@ -3,9 +3,9 @@
 
 #include <string>
 
-using ValidationResult = IPasswordValidator::PasswordValidatorResult;
+using ValidationResult = iPasswordValidator::PasswordValidatorResult;
 
-class PasswordValidator : public IPasswordValidator {
+class PasswordValidator : public iPasswordValidator {
 public:
     ValidationResult validate(std::string& password) override;
 };
